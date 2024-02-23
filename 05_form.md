@@ -16,5 +16,5 @@
 ex) `<label>사과<input type = 'radio' name = 'fruits' value = 'apple'></label>` 또는 `<input type = 'text' value = 'default input value'>`
    - `radio`는 같은 `name` 옵션들과 엮어서 사용 (`checkbox`도 같은 `name`으로 묶음) ex) `<input type = 'radio' name ='test'>`
    - `<button>`은 `<input type = "submit | reset">`과 기능이 거의 동일하지만, `<form>` 밖에서 사용가능하고 css와 아이콘을 이용하여 꾸밀 수 있음
-        - 그리고 `<button onclick = window.open('test.html')>창 열기</botton>` 처럼 옵션 추가로 사용 가능   
-(`<input type = 'button' onclick = window.open('test.html' value = '창 열기')>`과 같음)
+        - 그리고 `<button onclick = 'window.open('test.html')'>창 열기</botton>` 처럼 옵션 추가로 사용 가능   
+(`<input type = 'button' onclick = 'window.open('test.html')' value = '창 열기')>`과 같음)
