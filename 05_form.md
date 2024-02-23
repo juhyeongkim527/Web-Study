@@ -9,7 +9,7 @@
 3. 안에 `<input>`이나 `<select>`태그로 여러 입력 설정
    - **`<label for = 'id'>`는 `<input id='id'>`에 연결하여 사용하고 input에 문자를 붙일 때 사용**
    - `<select>` 태그에는 `<option>` 태그가 들어가고 value로 서버에 값 전달 (selected 옵션 사용 가능)
-   - <input type = 'text' list='id'>로 <datalist id ='id'>에 연결 가능
+   - `<input type = 'text' list='id'>`로 `<datalist id ='id'>`에 연결 가능
    - `<textarea>`는 input과 다르게 여러줄 가능
    - `value, required, auto, placeholder, checked, autofocus, selected` 등 여러가지 옵션 사용 가능
    - `value`는 어떤 type이 오느냐에 따라 다른데 대부분 text 타입이 아니면 **서버에 보낼 값**을 여기에 넣음  
