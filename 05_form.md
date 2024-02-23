@@ -1,6 +1,6 @@
 1. `<form></form>` 태그 안에 작성할 폼 작성
    - 옵션은 아래와 같이 여러가지가 있음
-   - 'method' : get, post처럼 http method 지정
+   - `method` : get, post처럼 http method 지정
    - `name` : **자바스크립트**로 폼을 제어할 때 사용할 폼 이름 지정
    - `action` : form 내용을 처리해 줄 **서버 프로그랭**믈 지정
    - `target` : action 속성 안에서 지정한 스크립트 파일을 다른 위치에서 열도록
