@@ -1,3 +1,4 @@
+# display의 value 중 block과 inline 차이
 ## width, height 설정 여부
 
 - block은 가능
