@@ -13,3 +13,5 @@
 
 - block은 다른 요소에 수직으로 배열
 - inline은 다른 요소에 수평으로 배열
+
+### 정확히는 나중에 필요할 때 해당 [링크](https://hoya-kim.github.io/2021/08/25/padding-on-inline-element/)에서 다시 공부해보자.
