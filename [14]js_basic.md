@@ -42,3 +42,14 @@ div h3 {
   font-weight: bold;
 }
 ```
+
+- 아래 `while` 문만 쓰면 vscode가 계속 튕기는데 그 이유가 뭘까
+
+```
+while (!isFinite(mem_count) || mem_count <= 0) {
+    mem_count = prompt("숫자가 아닙니다. 입장객의 수를 입력해주세요.");
+}
+while (!isFinite(column_count || column_count <= 0)) {
+    column_count = prompt("숫자가 아닙니다. 한 줄에 앉을 입장객의 수를 입력해주세요.");
+}
+```
