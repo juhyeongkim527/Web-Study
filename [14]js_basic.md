@@ -24,9 +24,9 @@ for (i = 1; i <= 9; i++) {
 
 - 아래는 바로 위의 구구단에 적용된 `css` 코드인데, `div`의 `display` 속성을 만약 `inline`으로 바꾼다면 `div`가 수평배치 되야 할 것 같다고 생각을 했음
 
-- 하지만 `inline`은 기본적으로 텍스트로 취급되고, `div`를 `inline`으로 해줘도 내부의 `h3`가 전체 너비를 차지하려고 하는 `block`의 특성을 가지기 때문에 `div` 자체도 `block`과 똑같이 배치되버림 (`inline`을 쓰려면 `float : left`를 붙이면 되긴함)
+- 하지만 `inline`은 기본적으로 텍스트로 취급되고, `div`를 `inline`으로 해줘도 `div` 자체가 `block`의 특성을 가지기 때문에 전체 너비를 가지려고 해서, `block`과 똑같이 배치되버림
 
-- 따라서, `width`, `height`를 가지는 `inline-block`으로 해줘야 수평으로 배치됨
+- 따라서, `width`, `height`를 가지는 `inline-block`으로 해주거나, `float : left`를 해줘서 `block`의 특성을 무시해줘야함
 
 ```
 div {
