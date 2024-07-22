@@ -21,3 +21,131 @@
 
 - 그리드 항목에 번호로 레이아웃을 지정하는 방식이나, 컨테이너에 템플릿 영역을 지정하는 방식 두가지로 사용 가능
     - 여기서, 각 class를 ㄱ자나 ㄴ자같이 한줄로 쓰지 않는다면 다른 클래스와 div를 정의해서 사용해줘야함
+
+- 예를 들어, 아래처럼하면 `box1`을 ㄱ자로 쓰니까 안되고,
+
+```
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Grid Layout</title>
+  <style>
+    #wrapper {
+      width: 700px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 100px);
+      grid-template-areas:
+        "box1 box1 box1"
+        "box2 box3 box3"
+        "box2 . box4"
+    }
+
+    .box {
+      padding: 15px;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .box1 {
+      background-color: #3689ff;
+      grid-area: box1;
+    }
+
+    .box2 {
+      background-color: #00cf12;
+      grid-area: box2;
+    }
+
+    .box3 {
+      background-color: #ff9019;
+      grid-area: box3;
+    }
+
+    .box4 {
+      background-color: #ffd000;
+      grid-area: box4;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="box box1">box1</div>
+    <div class="box box2">box2</div>
+    <div class="box box3">box3</div>
+    <div class="box box4">box4</div>
+  </div>
+</body>
+
+</html>
+```
+
+- 아래처럼, `box1`을 2번 써서 해도 안됨 : 다른 영역에 갈때는 class 이름을 하나 더 추가해줘야함
+
+```
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Grid Layout</title>
+  <style>
+    #wrapper {
+      width: 700px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 100px);
+      grid-template-areas:
+        "box1 box1 box1"
+        "box2 box3 box3"
+        "box2 . box4"
+        "box1 box1 box1"
+    }
+
+    .box {
+      padding: 15px;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .box1 {
+      background-color: #3689ff;
+      grid-area: box1;
+    }
+
+    .box2 {
+      background-color: #00cf12;
+      grid-area: box2;
+    }
+
+    .box3 {
+      background-color: #ff9019;
+      grid-area: box3;
+    }
+
+    .box4 {
+      background-color: #ffd000;
+      grid-area: box4;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="box box1">box1</div>
+    <div class="box box2">box2</div>
+    <div class="box box3">box3</div>
+    <div class="box box4">box4</div>
+    <div class="box box1">box1</div>
+  </div>
+</body>
+
+</html>
+```
