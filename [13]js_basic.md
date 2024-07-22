@@ -1,3 +1,7 @@
+- 외부에 작성된 `js` 파일은 `html` 파일 내부에서 `<script src = "파일 경로"></script>`로 입력
+
+- `css` 파일은 `<link rel = "stylesheet" href = "파일 경로">` 인 것과 구분
+
 - 처음에 변수에 입력을 받지 않고 선언만 하면, `undefined` 자료형
 
 - 변수가 유효한 값이 아닌 경우 `null` 자료형
