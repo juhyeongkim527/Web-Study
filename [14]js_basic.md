@@ -7,3 +7,15 @@
 - `===`와 `!==` 은 값 뿐만 아니라, 자료형까지 고려해서 판단
     - `3 === "3"` 은 `false` : 값은 같아서 `==` 에서는 `true` 이지만, 자료형이 다르기 때문에 `===`는 `false`
     - `3 !== "3"` 은 `true`  : 값은 같아서 `!=` 에서는 `false` 이지만, 자료형이 다르기 때문에 `!==`는 `false`
+
+- 아래처럼, js 코드인 `document.write` 내에서 html 태그를 사용하여 css를 적용할 수 있음
+```
+for (i = 1; i <= 9; i++) {
+			document.write("<div>");
+			document.write("<h3>" + i + "단</h3>");
+			for (j = 1; j <= 9; j++) {
+				document.write(i +" X " + j + " = " + i*j + "<br>");
+			}
+			document.write("</div>");
+		}
+```
