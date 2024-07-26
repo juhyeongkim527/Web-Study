@@ -138,3 +138,61 @@ function(매개변수)
 - 익명 함수에서만 사용 가능
 
 - `let 변수명 = (매개변수) => {body;};` 으로 사용 가능하고, 매개 변수가 하나인 경우에는 `()`이 생략 가능하며, `body;`가 한줄인 경우에는 `{}`를 생략 가능
+
+# 이벤트 처리기
+
+1. HTML 태그 안에 이벤트 처리기를 직접 연결하는 방식을 많이 사용함 `<태그 on+이벤트 = "이벤트 처리기">` 형식으로 사용함
+
+예를 들어, `<button onclick = "hidebutton()">` 은 `button` 태그를 `click` 한 이벤트가 발생한 경우, `<script></script>` 내부 또는 외부 `js` 파일에 저장된 `hidebutton()` 함수를 수행하게 됨
+
+```
+<body>
+	<div id="item">
+		<img src="images/flower.jpg" alt="">
+		<button class="over" id="open" onclick="showDetail()">상세 설명 보기</button>
+		<div id="desc" class="detail">
+			<h4>등심붓꽃</h4>
+			<p>북아메리카 원산으로 각지에서 관상초로 흔히 심고 있는 귀화식물이다. 길가나 잔디밭에서 흔히 볼 수 있다. 아주 작은 씨앗을 무수히 많이 가지고 있는데 바람을 이용해 씨앗들을 날려보내거나,
+				뿌리줄기를 통해 동일한 개체들을 많이 만들어 냄으로써 번식한다. </p>
+			<button id="close" onclick="hideDetail()">상세 설명 닫기</button>
+		</div>
+	</div>
+
+	<script>
+		function showDetail() {
+			document.querySelector('#desc').style.display = "block";	// 상세 설명 부분을 화면에 표시
+			document.querySelector('#open').style.display = "none";   // '상세 설명 보기' 단추를 화면에서 감춤
+		}
+
+		function hideDetail() {
+			document.querySelector('#desc').style.display = "none";	   // 상세 설명 부분을 화면에서 감춤
+			document.querySelector('#open').style.display = "block";	 // '상세 설명 보기' 단추를 화면에 표시
+		}
+	</script>
+</body>
+```
+
+2. `DOM`을 사용하면, HTML 태그 내에 자바스크립트 코드가 연결되는 것이 아닌, 자바스크립트 코드 내에 HTMl 코드가 연결됨 -> 자바스크립트 코드를 수정할 때, HTML 태그를 일일히 찾아서 전부 수정하지 않아도 되서 좋음
+
+`웹 요소.on+이벤트 = 함수(이벤트 처리기);` 형식으로 사용하고, 웹 요소를 가져오는 방식은 `document.querySelector(class 이름 || id 이름 || 선택자 이름);` 으로 가져옴. 웹 요소는 변수에 지정할 수도 있음.
+
+예를 들어, `id`가 `change` 웹 요소를 클릭할 때, `changeColor`라는 함수가 호출되도록 하려면 아래와 같이 세 방식으로 이벤트 처리기를 작성할 수 있음
+
+i. 웹 요소를 변수에 넣어서 여러 이벤트를 처리하는 경우
+
+```
+var changeButton = document.querySelector("#change");
+changeButton.onclick = changeColor;
+```
+
+ii. 웹 요소를 변수에 넣을 필요 없이 한 이벤트만 처리하는 경우
+
+```
+document.querySelector("#change").onclick = changeColor;
+```
+
+iii. 해당 이벤트를 딱 한번만 처리하는 경우 (익명 함수를 사용해도 여러번 처리가 가능하지만, 익명 함수 사용 목적 자체가 한번만 사용하는 경우 메모리를 절약하기 위함이기 때문)
+
+```
+document.querySelector("#change").onclick = function(){ body; };
+```
