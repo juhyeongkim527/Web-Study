@@ -107,6 +107,8 @@ var string2 = chars.join('/'); // a/b/c/d
 
 3. 날짜 시간 형식 바꾸기 : `toLocaleString()` - 현재 날짜와 시간을 현지 시간으로 표시, `toString()` - `Date` 객체 타입을 문자열로 표시
 
+---
+
 아래와 같이 `document.querySelector(.class명 or #id명).innerText = 변수명` 을 통해, 태그 사이에 변수를 출력할 수 있음
 
 ```
