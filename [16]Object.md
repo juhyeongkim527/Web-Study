@@ -133,3 +133,9 @@ var string2 = chars.join('/'); // a/b/c/d
   </script>
 </body>
 ```
+
+# `Math` 객체
+
+`Math` 객체는 따로 `Instance`를 생성하지 않고 바로 `Math.property`, `Math.method()` 로 사용한다.
+
+`Math` 에는 다양한 프로퍼티와 메서드가 존재한다.
