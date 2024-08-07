@@ -106,3 +106,28 @@ var string2 = chars.join('/'); // a/b/c/d
 2. 날짜 시간 설정하기 : `set`으로 시작
 
 3. 날짜 시간 형식 바꾸기 : `toLocaleString()` - 현재 날짜와 시간을 현지 시간으로 표시, `toString()` - `Date` 객체 타입을 문자열로 표시
+
+아래와 같이 `document.querySelector(.class명 or #id명).innerText = 변수명` 을 통해, 태그 사이에 변수를 출력할 수 있음
+
+```
+<body>
+  <div id="container">
+    <h1>책 읽기</h1>
+    <p><span class="accent" id="result"></span>일 연속으로 <br> 책 읽기를 달성했군요.</p>
+    <p>축하합니다!</p>
+  </div>  
+
+  <script>
+    var now = new Date("2020-10-15");       // 오늘 날짜를 객체로 지정
+    var firstDay = new Date("2020-10-01");   // 시작 날짜를 객체로 지정
+
+    var toNow = now.getTime();         // 오늘까지 지난 시간(밀리 초)
+    var toFirst = firstDay.getTime();  // 첫날까지 지난 시간(밀리 초) 
+    var passedTime = toNow - toFirst;  // 첫날부터 오늘까지 지난 시간(밀리 초)
+
+    passedTime = Math.round(passedTime/(1000*60*60*24));  // 밀리 초를 일 수로 계산하고 반올림
+
+    document.querySelector('#result').innerText = passedTime;
+  </script>
+</body>
+```
