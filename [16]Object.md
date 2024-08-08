@@ -202,6 +202,9 @@ popWin.creator = self;
 2. 
   - 팝업을 `onclick`시 `loadURL(url)` 함수가 정의되도록 하고, 인수로 `this.href`를 전달 후, `return false;`로 기본 동작(링크 클릭시 `doit-main.html`로 이동)을 안하도록 설정
   - `loadURL` 함수를 정의하여 앞에서 설정한 `window.creator`의 `location`을 전달한 `url`로 설정 후, 현재 팝업을 `window.close();`로 닫기
+  
+  - 주의할 점은 `doit-event.html`에서 정의한 `loadURL()` 함수는 해당 파일 내에서만 호출할 수 있고, `main.html`에서 호출 불가능하다.
+  - 그리고, `loadURL`에서 `window.creator.assign(url)`으로 하려고 했는데, `window.creator.location.assign(url);`로 해야한다. 그 이유는 `assign()`은 `location` 객체의 `method`이기 때문이다.
 
 ```
 <div id="container">
@@ -212,6 +215,7 @@ popWin.creator = self;
 <script>
   function loadURL(url) {
     window.creator.location = url;
+    // window.creator.location.assign(url);
     window.close();
   }
 </script>
