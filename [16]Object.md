@@ -246,6 +246,7 @@ popWin.creator = self;
   }
 
   openCenter("notice.html", "pop", 500, 400);
-
 </script>
 ```
+
+600 페이지에서 버튼을 클릭시 팝업 창을 화면 가운데에 표시하는 것은, `document.querySelector(#bttn).onclick = 함수이름`, 또는 `document.getElementById(bttn).onclick = 함수이름` 으로도 수행 가능
