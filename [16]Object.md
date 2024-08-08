@@ -168,6 +168,10 @@ var string2 = chars.join('/'); // a/b/c/d
 
 그리고 팝업 창을 닫는 것은 브라우저의 창닫기를 해서 할 수도 있지만, `button`에 `onclick = "javascript:window.close()"`와 같이 작성하여 연결할 수도 있다.
 
+# `document` 객체
+
+웹 페이지마다 하나씩 있으며, `<body>` 태그를 만나면 만들어지고, `HTML 문서`의 정보가 담겨 있다.
+
 # `navigator` 객체
 
 해당 객체에는 웹 브라우저의 버전, 플러그인 설치 정보, 온/오프라인 등의 여러 `정보`가 들어있고, 이 정보는 사용자에게는 수정 권한 없이 웹 문서를 가져와서 보여줄 수만 있다.
@@ -184,7 +188,7 @@ var string2 = chars.join('/'); // a/b/c/d
 
 # `location` 객체
 
-브라우저의 주소 표시줄과 관련된 객체로, `location` 객체에는 현재 문서의 `URL` 주소 정보가 포함되어있다.
+브라우저의 주소 표시줄과 관련된 객체로, `location` 객체에는 현재 문서의 `URL 주소 정보`가 포함되어있다.
 
 이 정보를 편집하거나 읽어와서 현재 브라우저 창에서 열어야 할 사이트나 문서를 지정할 수 있다. 예를 들어, `location.reload()`는 새로고침을 하는 메서드, `location.replace("URL")`은 입력한 URL로 주소를 대체하는 메서드이다.
 
@@ -219,5 +223,27 @@ popWin.creator = self;
     // window.creator.location.assign(url);
     window.close();
   }
+</script>
+```
+
+# `screen` 객체
+
+웹 브라우저에서 사용자의 화면 크기나 화면과 관련된 정보를 알아낼 때 사용하는 객체이다.
+
+사용자의 화면 방향을 잠그는 `lockOrientation()`이나, 잠근 화면의 방향을 해제하는 `unlockOrientation()` 메서드를 많이 사용한다.
+
+## page 595 : 팝업 창을 화면 가운데에 표시하기
+
+```
+<script>
+  function openCenter(rel, name, w, h) {
+    var left = (screen.availWidth - w) / 2;
+    var top = (screen.availHeight - h) / 2;
+    var opt = "left = " + left + ",top = " + top + ", width = " + w + ", height = " + h
+    window.open(rel, name, opt);
+  }
+
+  openCenter("notice.html", "pop", 500, 400);
+
 </script>
 ```
