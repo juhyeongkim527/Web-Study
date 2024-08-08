@@ -250,3 +250,5 @@ popWin.creator = self;
 ```
 
 600 페이지에서 버튼을 클릭시 팝업 창을 화면 가운데에 표시하는 것은, `document.querySelector(#bttn).onclick = 함수이름`, 또는 `document.getElementById(bttn).onclick = 함수이름` 으로도 수행 가능
+
+만약 함수에 `paramter`가 있으면 `...onclick = function(){ 함수이름(paramter) }`로 래핑해야 한다.
