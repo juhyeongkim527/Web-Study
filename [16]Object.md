@@ -188,8 +188,31 @@ var string2 = chars.join('/'); // a/b/c/d
 
 이 정보를 편집하거나 읽어와서 현재 브라우저 창에서 열어야 할 사이트나 문서를 지정할 수 있다. 예를 들어, `location.reload()`는 새로고침을 하는 메서드, `location.replace("URL")`은 입력한 URL로 주소를 대체하는 메서드이다.
 
-`replace()`를 쓰면 현재 문서 자체가 대체되기 때문에 `뒤로` 버튼이 먹히지 않는다.
+`replace()`를 쓰면 현재 문서 자체가 대체되기 때문에 `뒤로` 버튼이 먹히지 않는다. (`assign()`은 같은 기능이지만 `history`를 기억)
 
+## page 591 : 팝업 창에서 클릭한 내용을 메인 창에 나타내기
 
+1. `main.html`에서 `doit-event.html` 파일을 팝업 창으로 열고, 해당 팝업의 `window`의 `creator`를 `main.html`으로 설정
 
+```
+var popWin = window.open("doit-event.html", "popup", "width=750, height=600");
+popWin.creator = self;
+```
 
+2. 
+  - 팝업을 `onclick`시 `loadURL(url)` 함수가 정의되도록 하고, 인수로 `this.href`를 전달 후, `return false;`로 기본 동작(링크 클릭시 `doit-main.html`로 이동)을 안하도록 설정
+  - `loadURL` 함수를 정의하여 앞에서 설정한 `window.creator`의 `location`을 전달한 `url`로 설정 후, 현재 팝업을 `window.close();`로 닫기
+
+```
+<div id="container">
+  <h1>이벤트 공지</h1>
+  <img src="images/doit.jpg">
+  <p><a href="doit-main.html" onclick="loadURL(this.href);return false;">자세히 보기</a></p>
+</div>
+<script>
+  function loadURL(url) {
+    window.creator.location = url;
+    window.close();
+  }
+</script>
+```
