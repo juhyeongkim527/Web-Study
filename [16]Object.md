@@ -204,7 +204,8 @@ popWin.creator = self;
   - `loadURL` 함수를 정의하여 앞에서 설정한 `window.creator`의 `location`을 전달한 `url`로 설정 후, 현재 팝업을 `window.close();`로 닫기
   
   - 주의할 점은 `doit-event.html`에서 정의한 `loadURL()` 함수는 해당 파일 내에서만 호출할 수 있고, `main.html`에서 호출 불가능하다.
-  - 그리고, `loadURL`에서 `window.creator.assign(url)`으로 하려고 했는데, `window.creator.location.assign(url);`로 해야한다. 그 이유는 `assign()`은 `location` 객체의 `method`이기 때문이다.
+  - 그리고, `loadURL`에서 `window.creator.assign(url)`으로 하려고 했는데, `window.creator.location.assign(url);`로 해야한다.\ 
+그 이유는 `assign()`은 `location` 객체의 `method`이기 때문이다.
 
 ```
 <div id="container">
