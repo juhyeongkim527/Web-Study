@@ -58,7 +58,7 @@ var string2 = chars.join('/'); // a/b/c/d
 
 ## `splice()` : 원하는 위치에 요소를 삭제하거나 추가
 
-원하는 위치에 요소를 삭제하거나 추가한 후 삭제한 배열을 `return` 한다. 기존 배열이 수정되는 것에 주의
+원하는 위치에 요소를 삭제하거나 추가한 후 삭제한 배열을 `return` 한다. 기존 배열이 수정되는 것을 주의
 
 1. `argument`가 1개인 경우 : 삭제할 시작 `index`를 나타냄, `index`를 포함하여 뒤의 모든 요소가 삭제되어 삭제된 요소들이 배열로 `return`됨
 
@@ -68,13 +68,13 @@ var string2 = chars.join('/'); // a/b/c/d
 `index`를 포함하여 `size`개 만큼 요소가 삭제되고, `index` 위치에 `value`가 추가 됨. `size`가 `0`인 경우 `return` 되지 않고, 추가만 되며 `value` 자체를 배열로 나타내서 1개 이상 추가 가능
 
 
-## `slice()` : 원하는 위치에 요소를 삭제 (추가하는건 `splice(index, 0, value)`로 하면 되기 때문에 추가는 없음)
+## `slice()` : 원하는 위치부터 해당 요소를 return (추가하는건 `splice(index, 0, value)`로 하면 되기 때문에 추가는 없음)
 
-`splice()`와 달리 기존 배열을 변경하지 않고 삭제할 만큼의 요소만 배열로 만들어서 `return` 함
+`splice()`와 달리 기존 배열을 변경하지 않고 리턴할 만큼의 요소만 배열로 만들어서 `return` 함
 
-1. `argument`가 1개인 경우 : 삭제할 시작 `index`를 나타냄, `index`를 포함하여 뒤의 모든 요소를 배열로 `return`함, 원래 배열은 바뀌지 않음
+1. `argument`가 1개인 경우 : 리턴할 시작 `index`를 나타냄, `index`를 포함하여 뒤의 모든 요소를 배열로 `return`함, 원래 배열은 바뀌지 않음
 
-2. `argument`가 2개인 경우 : 삭제할 시작 `index`와 `size`가 아닌 `end index`을 나타냄. 범위가 `[,)` 이므로, `end index`를 포함하지 않고 배열로 `return`함, 똑같이 원래 배열은 바뀌지 안흥ㅁ
+2. `argument`가 2개인 경우 : 리턴할 시작 `index`와 `size`가 아닌 `end index`을 나타냄. 범위가 `[,)` 이므로, `end index`를 포함하지 않고 배열로 `return`함, 똑같이 원래 배열은 바뀌지 안흥ㅁ
 
 # `Date` 객체
 
@@ -129,7 +129,7 @@ var string2 = chars.join('/'); // a/b/c/d
     var toFirst = firstDay.getTime();  // 첫날까지 지난 시간(밀리 초) 
     var passedTime = toNow - toFirst;  // 첫날부터 오늘까지 지난 시간(밀리 초)
 
-    passedTime = Math.round(passedTime/(1000*60*60*24));  // 밀리 초를 일 수로 계산하고 반올림
+    passedTime = Math.round(passedTime/(1000*60*60*24));  // 밀리 초를 일 수로 계산하고 반올림 (밀리초 변환 * 분으로 변환 * 시간으로 변환 * 날짜로 변환)
 
     document.querySelector('#result').innerText = passedTime;
   </script>
@@ -140,7 +140,7 @@ var string2 = chars.join('/'); // a/b/c/d
 
 `Math` 객체는 따로 `Instance`를 생성하지 않고 바로 `Math.property`, `Math.method()` 로 사용한다.
 
-`Math` 에는 다양한 프로퍼티와 메서드가 존재한다.
+`Math` 에는 다양한 프로퍼티와 메서드가 존재한다. (`round()`, `pow()`, `floor()`, `random()` 등)
 
 # 브라우저 객체
 
@@ -160,13 +160,15 @@ var string2 = chars.join('/'); // a/b/c/d
 
 새 브라우저 창을 여는 메서드로, 팝업창과 같이 새 창을 띄울 때 많이 사용된다.
 
-`open(경로, 창 이름, 창 옵션)` 의 형태를 가지며, 경로는 새 창에 표시할 `html` 문서나 사이트의 경로를 나타낸다.
+`open(경로, 창 이름, 창 옵션)` 의 형태를 가지며, `경로`는 새 창에 표시할 `html` 문서나 사이트의 경로를 나타낸다.
 
-창 이름은 팝업창의 이름을 지정하는데, 창 이름이 지정되어있지 않으면 이미 팝업창이 떠있어도 웹 문서를 새로고침하면 계속 똑같은 팝업창이 뜨는 반면, 창 이름을 지정해주면 새로고침을 해줘도 해당 팝업이 떠있다면 다시 뜨지 않게 된다.
+`창 이름`은 팝업창의 이름을 지정하는데, 창 이름이 지정되어있지 않으면 이미 팝업창이 떠있어도 웹 문서를 새로고침하면 계속 똑같은 팝업창이 뜨는 반면, 창 이름을 지정해주면 새로고침을 해줘도 해당 팝업이 떠있다면 다시 뜨지 않게 된다.
 
-창 옵션은 `left, top, width, height` 속성을 지니며, 창 옵션이 없으면 왼쪽 상단에 붙어서 새로운 창이 뜬다.
+`창 옵션`은 `left, top, width, height` 속성을 지니며, 창 옵션이 없으면 왼쪽 상단에 붙어서 새로운 창이 뜬다.
 
 그리고, `open()` 메서드는 사이트의 팝업이 차단되어 있으면 뜨지 않는데, 만약 이런 경우 `open()`은 `null`을 리턴하기 때문에, 리턴값을 보고 팝업이 차단되어있는지 `if(open() == null)`로 확인하여 `alert()`나 다른 요소로 팝업 차단이 되었음을 사용자에게 알릴 수 있다.
+
+창이 제대로 오픈되면, `open()` 된 팝업 창의 브라우저 `window` 객체를 리턴한다.
 
 그리고 팝업 창을 닫는 것은 브라우저의 창닫기를 해서 할 수도 있지만, `button`에 `onclick = "javascript:window.close()"`와 같이 작성하여 연결할 수도 있다.
 
@@ -180,13 +182,13 @@ var string2 = chars.join('/'); // a/b/c/d
 
 웹 브라우저의 종류에 따라 웹 문서를 해석하고 실행하는 `랜더링 엔진`과 `자바스크립트 엔진`이 다르기 때문에, 모든 사용자에게 브라우저 상관없이 똑같은 웹 브라우저를 만들기 위해서는 사용자의 웹 브라우저 정보를 알아야 하기 때문에 `naviagtor` 객체를 이용한다.
 
-예를 들어 아직 표준화되지 않은 CSS 속성 앞에는 브라우저 벤더를 의미하는 prefix를 지정한다. 
+예를 들어 아직 표준화되지 않은 CSS 속성 앞에는 브라우저 벤더를 의미하는 `prefix`를 지정한다. 
 
 웹 브라우저의 정보를 파악할 때 `navigator.userAgent` 프로퍼티를 많이 이용하고, 해당 프로퍼티를 통해 사용자의 웹브라우저 정보를 알 수 있다. 요즘에는 같은 자바스크립트 엔진을 사용하는 브라우저가 많아져서 해당 프로퍼티는 사용하지 않는 추세인 것 같다.
 
 # `history` 객체
 
-브라우저에서 `뒤로`, `앞으로`, `주소 표시줄을 통해 이동` 한 사이트의 주소가 `배열` 형태로 저장되는 객체이다. 보안 문제 때문에 `read-only`이다.
+브라우저에서 `뒤로`, `앞으로`, `주소 표시줄`을 통해 이동한 사이트의 주소가 `배열` 형태로 저장되는 객체이다. 보안 문제 때문에 `read-only`이다.
 
 # `location` 객체
 
@@ -198,20 +200,20 @@ var string2 = chars.join('/'); // a/b/c/d
 
 ## page 591 : 팝업 창에서 클릭한 내용을 메인 창에 나타내기
 
-1. `main.html`에서 `doit-event.html` 파일을 팝업 창으로 열고, 해당 팝업의 `window`의 `creator`를 `main.html`으로 설정
+1. `main.html`에서 `doit-event.html` 파일을 팝업 창으로 열고, 해당 팝업의 `window`객체의 `creator` property를 `main.html`으로 설정
 
 ```
 var popWin = window.open("doit-event.html", "popup", "width=750, height=600");
 popWin.creator = self;
 ```
 
-2. 
-  - 팝업을 `onclick`시 `loadURL(url)` 함수가 정의되도록 하고, 인수로 `this.href`를 전달 후, `return false;`로 기본 동작(링크 클릭시 `doit-main.html`로 이동)을 안하도록 설정
-  - `loadURL` 함수를 정의하여 앞에서 설정한 `window.creator`의 `location`을 전달한 `url`로 설정 후, 현재 팝업을 `window.close();`로 닫기
+2. `doit-event.html`
+
+  - 팝업을 `onclick`시 `loadURL(url)` 함수가 실행되도록 하고, 인수로 `this.href`를 전달 후, `return false;`로 기본 동작(링크 클릭시 `doit-main.html`로 이동)을 안하도록 설정
+  - `loadURL` 함수를 정의하여 앞에서 설정한 `window.creator`의 `location` propert를 전달한 `url`로 설정 후, 현재 팝업을 `window.close();`로 닫기
   
   - 주의할 점은 `doit-event.html`에서 정의한 `loadURL()` 함수는 해당 파일 내에서만 호출할 수 있고, `main.html`에서 호출 불가능하다.
-  - 그리고, `loadURL`에서 `window.creator.assign(url)`으로 하려고 했는데, `window.creator.location.assign(url);`로 해야한다.
-  - 그 이유는 `assign()`은 `location` 객체의 `method`이기 때문이다.
+  - 그리고, `loadURL`에서 다른 방법을 사용하여 `window.creator.assign(url)`으로 브라우저를 갈아끼려고 했는데, `assign()`은 `location` 객체의 `method`이기 때문에 `window.creator.location.assign(url);`로 해야한다.
 
 ```
 <div id="container">
@@ -241,7 +243,7 @@ popWin.creator = self;
   function openCenter(rel, name, w, h) {
     var left = (screen.availWidth - w) / 2;
     var top = (screen.availHeight - h) / 2;
-    var opt = "left = " + left + ",top = " + top + ", width = " + w + ", height = " + h
+    var opt = "left = " + left + ",top = " + top + ", width = " + w + ", height = " + h // string type
     window.open(rel, name, opt);
   }
 
@@ -251,4 +253,4 @@ popWin.creator = self;
 
 600 페이지에서 버튼을 클릭시 팝업 창을 화면 가운데에 표시하는 것은, `document.querySelector(#bttn).onclick = 함수이름`, 또는 `document.getElementById(bttn).onclick = 함수이름` 으로도 수행 가능
 
-만약 함수에 `paramter`가 있으면 `...onclick = function(){ 함수이름(paramter) }`로 래핑해야 한다.
+만약 함수에 `paramter`가 있으면 `...onclick = function(){ 함수이름(paramter) }`로 래핑해야 한다. 왜냐면, `argument`를 함께 전달하면 자바스크립트 엔진이 소스를 해석할 때, 바로 실행하도록 해버리기 때문이다.
