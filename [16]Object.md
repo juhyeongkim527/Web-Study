@@ -111,6 +111,8 @@ var string2 = chars.join('/'); // a/b/c/d
 
 아래와 같이 `document.querySelector(.class명 or #id명).innerText = 변수명` 을 통해, 태그 사이에 변수를 출력할 수 있음
 
+`innerText`는 `querySelector`에서 선택된 태그에서 `Text`만 가져오는거고 `innerHTML`은 태그 내에 있는 내부 태그와 텍스트를 전부 가져오는거임
+
 ```
 <body>
   <div id="container">
