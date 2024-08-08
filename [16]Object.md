@@ -62,7 +62,7 @@ var string2 = chars.join('/'); // a/b/c/d
 
 1. `argument`가 1개인 경우 : 삭제할 시작 `index`를 나타냄, `index`를 포함하여 뒤의 모든 요소가 삭제되어 삭제된 요소들이 배열로 `return`됨
 
-2. `argument`가 2개인 경우 : 삭제할 시작 `index`와 삭제할 크기 `size`를 나타냄, 'index`를 포함하여 `size`개 만큼 요소가 삭제되고, 삭제된 요소들이 배열로 `return`됨
+2. `argument`가 2개인 경우 : 삭제할 시작 `index`와 삭제할 크기 `size`를 나타냄, `index`를 포함하여 `size`개 만큼 요소가 삭제되고, 삭제된 요소들이 배열로 `return`됨
 
 3. `argument`가 1개인 경우 : 삭제할 시작 `index`와 삭제할 크기 `size`와 추가할 요소 `value`를 나타냄. 
 `index`를 포함하여 `size`개 만큼 요소가 삭제되고, `index` 위치에 `value`가 추가 됨. `size`가 `0`인 경우 `return` 되지 않고, 추가만 되며 `value` 자체를 배열로 나타내서 1개 이상 추가 가능
