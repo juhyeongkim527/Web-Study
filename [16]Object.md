@@ -15,7 +15,7 @@
 
 - `Instance` : 객체를 통해 만들어진 것, 객체의 `Property`와 `Method`를 그대로 물려 받음
 
-- `Property` : 변수, `field`
+- `Property` : 변수(field)
 
 - `Method` : 함수
 
