@@ -395,6 +395,8 @@ document.getElementById("itemList").appendChild(newItem);
 
 DOM 트리에서 특정 노드를 삭제하기 위해서는, 무조건 부모 노드를 통해서 삭제해야 한다. 따라서, 먼저 부모 노드를 찾기 위한 프로퍼티가 필요하다.
 
+***근데 사실 요즘 브라우저에서는 그냥 `노드.remove();`로 부모 노드에 접근하지 않고 바로 삭제도 가능하다고 한다.***
+
 ## 부모 노드 찾기 : `자식노드.ParentNode`
 
 해당 프로퍼티는 `parentNode` 프로퍼티이고, 찾고자 하는 노드에 `노드.parentNode`로 찾을 수 있다.
@@ -414,23 +416,94 @@ DOM 트리에서 특정 노드를 삭제하기 위해서는, 무조건 부모 �
 
 ```
 function newRegister() {
-  var newItem = document.createElement("li");  // 요소 노드 추가
-  var subject = document.querySelector("#subject");  // 폼의 텍스트 필드
-  var newText = document.createTextNode(subject.value);  // 텍스트 필드의 값을 텍스트 노드로 만들기
-  newItem.appendChild(newText);  // 텍스트 노드를 요소 노드의 자식 노드로 추가
-
-  var itemList = document.querySelector("#itemList");  // 웹 문서에서 부모 노드 가져오기 
-  itemList.insertBefore(newItem, itemList.childNodes[0]);  // 자식 노드중 첫번째 노드 앞에 추가
-
-  subject.value = "";
-
-  var li_list = document.querySelectorAll("li");
-
-  li_list.forEach(li => {
-  li.addEventListener("click", function () {
-    if (this.parentNode)
-      this.parentNode.removeChild(this);
-  })
-});
+	var newItem = document.createElement("li");  // 요소 노드 추가
+	var subject = document.querySelector("#subject");  // 폼의 텍스트 필드
+	var newText = document.createTextNode(subject.value);  // 텍스트 필드의 값을 텍스트 노드로 만들기
+	newItem.appendChild(newText);  // 텍스트 노드를 요소 노드의 자식 노드로 추가
+	
+	var itemList = document.querySelector("#itemList");  // 웹 문서에서 부모 노드 가져오기 
+	itemList.insertBefore(newItem, itemList.childNodes[0]);  // 자식 노드중 첫번째 노드 앞에 추가
+	
+	subject.value = "";
+	
+	var li_list = document.querySelectorAll("li");
+	
+	li_list.forEach(li => {
+	li.addEventListener("click", function () {
+	if (this.parentNode)
+	  this.parentNode.removeChild(this);
+	})
+	});
 }
+```
+
+# page 642 : 할 일 클릭 시 해당 노드를 회색으로 만들고 가로줄이 그려지도록 하기
+
+주의할 점은, `var li_list = document.querySelectorAll(".check");`를 통해 `class`가 `check`인 노드를 가져오면, 딱 `<span>` 태그를 가지는 요소까지만 가져오기 때문에, 부모 노드인 `<li>`에 `style`을 넣으려면 `parentNode.style`로 접근해야 한다는 것이다.
+
+```
+<body>
+	<h1>할 일 목록</h1>
+	<ul>
+		<li><span class="check">&check;</span>할 일 1 </li>
+		<li><span class="check">&check;</span>할 일 2 </li>
+		<li><span class="check">&check;</span>할 일 3 </li>
+		<li><span class="check">&check;</span>할 일 4 </li>
+		<li><span class="check">&check;</span>할 일 5 </li>
+	</ul>
+	<script>
+		var li_list = document.querySelectorAll(".check");
+		li_list.forEach(li => {
+			li.addEventListener("click", function () {
+				this.parentNode.style.color = "#ccc";
+				this.parentNode.styles.textDecoration = "line-through";
+			})
+		})
+	</script>
+</body>
+```
+
+# page 643 : 행과 열을 입력시 테이블이 작성되도록 하기
+
+버튼을 클릭 시 예전에 추가했던 노드들을 삭제하기 위해 `contents.innerHTML = "";`을 쓰거나 아래의 주석된 코드로 `table` 요소를 가져와서 삭제하도록 하였다.
+
+`contents.innerHTML = "";`를 하면, 해당 요소 노드의 자식 노드가 전부 삭제되므로 전부 날려야 할 때는 훨씬 간편하다.
+
+```
+<body>
+	<form>
+		<input type="text" id="rCount" value="1">행
+		<input type="text" id="cCount" value="1">열
+		<button onclick="drawTable(); return false;">작성</button>
+	</form>
+	<div id="contents">
+	</div>
+	<script>
+		function drawTable() {
+			var contents = document.getElementById("contents");
+			contents.innerHTML = ""; // 버튼을 클릭 시 이전에 띄웠던 table이 제거되도록 하기
+
+			// var tables = contents.querySelectorAll("table");
+			// tables.forEach(table => {
+			// 	table.remove();
+			// 	// table.parentNode.removeChild(table);
+			// });
+
+			var rowCount = document.querySelector("#rCount").value; // row개수 가져오기
+			var colCount = document.querySelector("#cCount").value; // col개수 가져오기
+			for (var i = 0; i < rowCount; i++) {
+				var new_tr = document.createElement("tr"); // row마다 tr 노드 생성
+				for (var j = 0; j < colCount; j++) {
+					var new_td = document.createElement("td"); // col마다 td 노드 생성
+					var new_text = document.createTextNode(i + ", " + j); // td 노드에 (row, col) 텍스트 노드를 연결하기 위해 생성
+					new_td.appendChild(new_text); // td 노드에 텍스트 노드 연결
+					new_tr.appendChild(new_td); // tr 노드에 td 노드 연결
+				}
+				var table = document.createElement("table"); // table 노드 생성(그냥 div에 table 넣어도 되긴 함)
+				table.appendChild(new_tr); // table에 tr 연결
+				contents.appendChild(table); // tr을 contents에 연결
+			}
+		}
+	</script>
+</body>
 ```
