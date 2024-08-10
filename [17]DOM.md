@@ -76,3 +76,160 @@ function innhtml() {
 <img width="546" alt="image" src="https://github.com/user-attachments/assets/3f3b48d2-1cb2-4967-9bd8-8ca9dddff738">
 <img width="450" alt="image" src="https://github.com/user-attachments/assets/b43392b2-ca39-4645-8d99-1203e7adcf2c">
 
+## 속성을 가져오기, 수정하기 : `getAttribute()`, `setAttribute()`
+
+앞에서 웹 요소를 가져오는 방법으로 요소를 가져와서, 해당 요소의 속성 값을 가져오거나 수정할 수 있는 메서드이다. 단일 요소에만 메서드를 수행할 수 있기 때문에, `querySelectorAll`과 같은 메서드로 가져온 경우,
+
+```
+const items = document.querySelectorAll('.item');
+
+// 각 요소에 대해 반복하며 "src" 속성을 가져옵니다. (<img> 태그의 속성이라고 가정)
+items.forEach(item => {
+    const value = item.getAttribute("src");
+    console.log(value);
+});
+```
+
+이러한 방식으로 반복문을 돌며 속성을 가져오거나 변경시켜야 한다.
+
+# DOM 에서 이벤트 처리하기
+
+웹 문서에서 이벤트가 발생하면 이벤트 처리기를 연결해야 한다. 예전에 배운 방식대로 태그 안에 `onclick` 속성을 통해 이벤트 처리기 함수나 동작을 직접 작성해도 되지만, 이렇게 되면 태그안에 내용이 너무 길어지거나 `js` 파일과 분리하기 힘든 단점이 있기 때문에 아래의 방식을 많이 사용한다.
+
+## `DOM 요소`에 함수(이벤트 처리기) 직접 연결하기
+
+예전에 사용했던 적이 있는데, `요소명.on+event이름 = 함수이름` 형식으로 사용할 수 있다.
+
+아래와 같은 방식으로 `id`가 `cup`인 요소에 `click` 이벤트 발생시 익명 함수로 이벤트 처리기를 연결할 수도 있고, 아예 함수를 따로 선언하여 쓸 수도 있다.
+
+함수를 아예 선언해서 쓸 때, 위에서도 얘기했지만, `parameter`를 전달하려면 `function() {함수 이름(paramter)}`으로 한번 래핑해줘야한다. 또는 `() => {함수 이름(paramter)}`와 같이 화살표 함수 형식으로 써도 된다.
+
+근데, 이 부분은 더 공부해야 하겠지만, 익명 함수 대신 화살표 함수를 쓸 때는 `paramter`로 `this`를 전달하지 못하기 떄문에 `this`를 전달할 때는 익명함수를 써야된다. 익명 함수는 이벤트가 발생한 요소를 가리키지만, 화살표 함수는 lexical한 상위 요소를 가리키기 때문이다.
+
+```
+var cup = document.querySelector("#cup");  // id = cup인 요소를 가져옴
+cup.onclick = function(){
+  alert("이미지를 클릭했습니다");
+}
+```
+
+그리고, 해당 방식으로 이벤트 처리기를 연결하면, `click` 이라는 이벤트에 `1개의 이벤트 처리기`만 연결할 수 있기 때문에 가장 마지막에 연결한 이벤트 처리기로 덮어씌워져서 여러개의 이벤트 처리기를 연결할 수 없다.
+
+## `addEventListener()` 메서드를 사용하여 연결하기
+
+`onclick`과 같이 `on+event이름`을 통해 이벤트 처리기를 연결하면, 요소 하나 당 1개의 이벤트 처리기만 연결할 수 있는데, `addEventListener` 메서드를 사용하면 한 요소에 `여러 개의 이벤트 처리기`를 연결할 수 있다.
+
+`addEventListener("event이름", 이벤트 처리기, 캡처 여부);` 형식으로 사용하고 `;`를 꼭 마지막에 붙여야 한다. 이벤트 처리기에는 익명 함수도 사용할 수 있다.
+
+`캡처 여부`는 기본 값이 `false`이며, `false`인 경우 발생한 이벤트가 자식 노드 -> 부모 노드로 전달되는 거고, `true`는 부모 노드 -> 자식 노드로 전달되는 것이다. 예를 들어 `false`인 경우 자식 노드에서 `click` 이벤트가 발생하면, 부모 노드에도 `click` 이벤트가 전달되어 부모 노드를 클릭하지 않았음에도 부모 노드의 `click`에 대한 이벤트 처리기가 같이 호출되는 것이다.
+
+그리고, 이벤트 처리기에 `paramter`가 존재하는 경우, `function() {}`으로 래핑해주거나 `() => {}` 처럼 화살표 함수를 쓸 수 있다.
+
+마찬가지로 유의할 점은 `this`와 관련된 `paramter`를 넘길 때는 익명 함수를 쓰는건 괜찮지만 화살표 함수로는 넘길 수 없기 때문에 이를 유의해야한다.
+
+## `event` 객체
+
+이벤트 정보를 저장하는 객체이다. 어떤 이벤트가 발생했는지에 대한 정보, 이벤트가 발생한 요소 등을 저장하고 있다. `event` 객체에는 여러 프로퍼티와 메서드가 존재한다.
+
+`event` 객체는 이벤트의 정보와 이벤트가 발생한 요소의 이름은 가지고 있지만, 요소 자체는 가지고 있지 않기 때문에 이벤트가 발생한 요소에 접근하려면 `this` 키워드를 사용해야한다.
+
+아래는 `event` 객체를 사용하여, `click`시 발생한 이벤트의 정보를 보여주는 예제이다.
+
+```
+<body>
+	<div id="container">
+    <img src="images/cup-1.png" id="cup">		
+  </div>	
+
+	<script>
+		var cup = document.querySelector("#cup");  // id = cup인 요소를 가져옴
+		cup.onclick = function(event) {
+			alert("이벤트 유형: " + event.type + ", 이벤트 발생 위치 : " + event.pageX + "," + event.pageY);	
+		}
+	</script>
+</body>
+```
+
+## `CSS 속성`에 접근하기 : `document.요소명.style.속성명`
+
+요소를 가져온 후 `style.속성명`을 붙여서 `CSS 속성`에 접근할 수 있다. 일반 속성들은 `getAttribute`로 가져오지만 CSS 속성은 `.style`을 통해 가져와야 한다.
+
+그리고 `background-color`처럼 하이픈이 붙은 속성들은 `backgroundColor`로 두번째 단어의 첫번째 문자를 대문자로 바꿔주면 된다.
+
+아래는 `rect`라는 `class`를 가지는 요소 위로 마우스를 이동시켰을 때(`mouseover`, `mouseout` 이벤트), CSS 속성을 바꾸는 예제이다.
+
+```
+<body>
+	<div id="container">
+		<p>도형 위로 마우스 포인터를 올려놓으세요.</p>
+		<div id="rect"></div>
+	</div>	
+	
+	<script>
+		var myRect = document.querySelector("#rect");
+		myRect.addEventListener("mouseover", function() {  // mouseover 이벤트 처리
+			myRect.style.backgroundColor = "green";  // myRect 요소의 배경색 
+			myRect.style.borderRadius = "50%";  // myRect 요소의 테두리 둥글게 처리
+		});
+		myRect.addEventListener("mouseout", function() {  // mouseout 이벤트 처리
+			myRect.style.backgroundColor = "";  // myRect 요소의 배경색 지우기 
+			myRect.style.borderRadius = "";  // myRect 요소의 테두리 둥글게 처리 안 함
+		});
+	</script>
+</body>
+```
+
+## page 620 : 라이트 박스 효과 만들기
+
+1. `pic` 이라는 클래스를 가지는 요소들을 가져와서 `pics`에 저장한다.
+
+2. `pics`에 저장된 `노드 리스트` 들을 순회하며, `addEventListener`를 통해 `click` 이벤트 발생 시 `showLightbox`라는 이벤트 처리기 함수를 등록해준다.
+  - `forEach` 와 화살표 함수를 사용하였음
+
+3. `showLightbox` 함수
+     1. `this` 키워드를 통해 이벤트가 발생한 요소의 "data-src" 속성 값을 가져와서 `bigLocation`에 저장해준 후,
+     2. `setAttribute`를 통해 `lightboxImage`의 `src` 속성을 `bigLocation`에 저장된 속성값으로 변경시켜준 후,
+     3. 원래 보이지 않았던 `lightbox`의 요소를 `display` 속성을 변경시켜 보이게 해준다.
+
+4. `lightbox` 요소가 다시 클릭되면, 보이지 않게 하기 위해 `click`시 `display`를 다시 안보이도록 바꿔주도록 이벤트 처리기를 등록해준다.
+   
+```
+<body>
+  <div class="row">
+    <ul>
+      <li><img src="images/tree-1-thumb.jpg" data-src="images/tree-1.jpg" class="pic"></li>
+      <li><img src="images/tree-2-thumb.jpg" data-src="images/tree-2.jpg" class="pic"></li>
+      <li><img src="images/tree-3-thumb.jpg" data-src="images/tree-3.jpg" class="pic"></li>
+      <li><img src="images/tree-4-thumb.jpg" data-src="images/tree-4.jpg" class="pic"></li>
+      <li><img src="images/tree-5-thumb.jpg" data-src="images/tree-5.jpg" class="pic"></li>
+      <li><img src="images/tree-6-thumb.jpg" data-src="images/tree-6.jpg" class="pic"></li>
+    </ul>
+  </div>
+  <div id="lightbox">
+    <img src="images/tree-1.jpg" alt="" id="lightboxImage">
+  </div>
+  <script>
+    var pics = document.querySelectorAll(".pic");
+    var lightbox = document.getElementById("lightbox");
+    var lightboxImage = document.getElementById("lightboxImage");
+
+    lightbox.onclick = function () {
+      this.style.display = "none";
+    }
+
+    pics.forEach(pic => {
+      pic.addEventListener("click", showLightbox);
+    })
+
+    // for (var i = 0; i < pics.length; i++) {
+    //   pic[i].addEventListener("click", showLightbox);
+    // }
+
+    function showLightbox() {
+      var bigLocation = this.getAttribute("data-src");
+      lightboxImage.setAttribute("src", bigLocation);
+      lightbox.style.display = "block";
+    }
+  </script>
+</body>
+```
