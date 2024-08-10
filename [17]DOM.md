@@ -233,3 +233,204 @@ cup.onclick = function(){
   </script>
 </body>
 ```
+
+# DOM에서 노드 추가, 삭제하기
+
+처음에는 화면에 내용이 보이지 않다가, 버튼을 클릭하는 등의 이벤트가 발생하면 내용을 보여주는 동작을 만들 때, 앞에서 처럼 CSS의 `display` 속성을 바꿔서 만들 수 있지만, DOM 트리에 새로운 노드를 추가해서 해당 노드의 내용을 보여주는 방식을 사용할 수도 있다.
+
+이때 주의할 점은 `요소 노드`를 추가할 때, 단순히 요소 노드 하나만 추가하는 것이 아니라 그 내부의 `텍스트 요소`나 `속성 노드`도 함께 추가해야 한다는 것이다.
+
+이제 노드의 추가 과정을 살펴보자.
+
+## 텍스트 노드를 사용하는 새로운 요소 노드를 추가하기
+
+### 1. 요소 노드 만들기 : `document.createElement(노드명)`
+
+예를 들어, `<p>` 태그를 가지는 요소 노드를 만들고 싶다면, `var newP = document.createElement("p");` 를 통해 새로운 요소 노드를 만들 수 있다.
+
+### 2. 텍스트 노드 만들기 : `document.createTextNode(노드명)`
+
+`<p>` 태그 내에는 텍스트 노드가 자식 노드로 들어가야 하기 때문에 `var textNode = document.createTextNode("텍스트 내용~~~");` 을 통해 새로운 텍스트 노드를 만들 수 있다.
+
+### 3. 자식 노드 연결하기 : `부모노드.appendChild(자식노드)`
+
+이제 `<p>` 태그에 텍스트 노드를 연결하고, 연결된 노드를 다시 원하는 위치의 `<div id = "info"></div>` 라는 부모 노드에 연결하기 위해서 2번 `appendChild()` 메서드를 사용하면 된다.
+
+1. `newP.appendChild(textNode)`
+
+2. `document.getElementById("info").appendChild(newP);`
+
+## 4. [더보기]를 누르면, 해당 요소 노드가 추가되도록 소스 코드 완성하기
+
+태그 내에 `onclick` 속성을 통해 `addP` 함수가 호출되도록 하였고, 한번 호출된 이후로 다시 [더보기]를 클릭하면 해당 요소가 여러번 추가되지 않게 하기 위해 `this.onclick ='';` 코드를 추가하였다.
+
+태그 내에서 이벤트 처리기 함수를 등록할 때에는 태그 밖에서 `onclick=`이나 `addEventListener()`를 사용하는 방식과 달리 `addP();` 처럼 함수에 `()`를 추가로 작성해줘야 한다.
+
+그리고, 태그 내에서 호출된 `addP()` 내부에서 `this`를 참조하면 `() => {}`로 래핑한 것과 같이 이벤트가 발생한 요소를 가리키지 않기 때문에, 태그 내에서 `this.onclick = '';`을 써줘야 한다.
+
+참고로, `querySelectorAll`이나 `getElements~`와 같이 여러 개의 `노드 리스트`나 `HTMLCollection`을 리턴하는 경우, 내부에 요소가 1개만 존재하더라도 항상 `for`문을 통해 접근해야 한다.
+
+```
+<body>
+  <div id="container">
+    <h1>DOM을 공부합시다</h1>
+    <a href="#" onclick="addP(); this.onclick='';">더 보기</a>
+    <div id="info"></div>
+  </div>
+  <script>
+    function addP() {
+      var newP = document.createElement("p");
+      var txtNode = document.createTextNode("DOM은 Document Object Model의 줄임말입니다.");
+      newP.appendChild(txtNode);
+      document.getElementById("info").appendChild(newP);
+    }
+  </script>
+</body>
+```
+
+# 속성 값이 있는 새로운 요소 추가하기
+
+![image](https://github.com/user-attachments/assets/0b9034c0-d189-4fd3-93b4-e3d62e231ffa)
+
+## 1. 요소 노드 만들기 : `document.createElement(노드명)`
+
+`var newImg = document.createElement("img");`
+
+## 2. 속성 노드 만들기 : `document.createAttribute(속성명)`
+
+예를 들어, `<img>` 태그에 `src` 속성 노드를 만들기 위해서는 `var srcNode = document.createAttribute("src");` 를 해준 후, `srcNode.value = "images/dom.jpg";` 처럼 다시 속성 값을 대입해줘야 한다.
+
+## 3. 속성 노드 연결하기 : `요소명.setAttributeNode(속성노드)` 
+
+요소 노드와 속성 노드는 자식 노드를 연결하는 방식처럼 `appendChild()` 메서드를 사용하여 연결하지 않고, `setAttribute()` 메서드를 통해 연결한다.
+
+`newImg.setAttributeNode(srcNode);`와 같이 사용해주면 된다.
+
+## 4. 자식 노드 연결하기 : `부모노드.appendChild(자식노드)`
+
+마지막으로 위와 같이 `info`라는 `id`를 가지는 요소 노드에 `img` 요소 노드를 연결하기 위해 `document.getElementById("info").appendChild(newImg);` 를 통해 연결한다.
+
+## 5. [더보기]를 누르면, 새로 추가한 `img` 요소 노드가 추가되도록 소스 코드 완성하기
+
+```
+<div id="container">    
+    <h1>DOM을 공부합시다</h1>
+    <a href="#" onclick="addContents(); this.onclick='';">더 보기</a>    
+    <div id="info"></div>
+  </div>
+  <script>
+    function addContents() {
+      var newImg = document.createElement("img");
+      var srcNode = document.createAttribute("src");
+      var altNode = document.createAttribute("alt");
+      srcNode.value = "images/dom.jpg";
+      altNode.value = "돔 트리 예제 이미지";
+      newImg.setAttributeNode(srcNode);
+      newImg.setAttributeNode(altNode);
+
+      document.getElementById("info").appendChild(newP);
+      document.getElementById("info").appendChild(newImg);
+    }
+  </script>
+```
+
+## page 633 : 텍스트 필드에 입력한 값을 화면에 표시하기
+
+1. `<form>` 태그에서 `subject`를 `id`로 가지는 `<input>` 태그에 입력한 값을 가지고 와서 `<ul>` 태그를 가지는 요소 노드에 `<li>` 태그를 가지는 새로운 요소 노드를 추가할 계획을 가지고 소스 코드를 작성한다.
+
+2. `<input>` 태그 안에 사용자가 입력한 값이 존재하기 때문에 `subject` id명으로 접근하여, 해당 노드에 입력된 값인 `value`를 가져온 후, 텍스트 노드를 요소 노드에 추가한 후 `subject` 요소 노드에 해당 노드를 추가해준다.
+
+3. `subject.value = "";` 으로 `click` 후에는 `value`를 이미 받아왔기 때문에 텍스트 필드에 사용자가 입력한 값은 지워준다.
+
+4. `button` 클릭시 해당 이벤트 처리기가 등록되도록 아래에 등록한 후, `return false`는 원래 `<form>` 태그의 `<button>`의 기능인 submit 역할을 취소하기 위함이다.
+
+```
+var newItem = document.createElement("li");
+var subject = document.getElementById("subject");
+var newText = document.createTextNode(subject.value);
+
+newItem.appendChild(newText);
+document.getElementById("itemList").appendChild(newItem);
+```
+
+
+```
+<body>
+  <div id="container">
+    <h1>Web Programming</h1>
+    <p>공부할 주제를 기록해 보세요</p>
+    <form action="">
+      <input type="text" id="subject" autofocus>
+      <button>추가</button>
+    </form>
+    <hr>
+    <ul id="itemList"></ul>
+  </div>
+  <script>
+    function newRegister() {
+      var newItem = document.createElement("li");
+      var subject = document.getElementById("subject");
+      var newText = document.createTextNode(subject.value);
+
+      newItem.appendChild(newText);
+      document.getElementById("itemList").appendChild(newItem);
+
+      subject.value = "";
+    }
+
+    var button = document.querySelector("button");
+    button.onclick = () => {
+      newRegister();
+      return false;
+    }
+  </script>
+</body>
+```
+
+### 참고 : `appendChild()`는 항상 노드 리스트의 제일 끝에 자식 노드를 추가하는데, `insertBefore()`를 사용하면 노드 리스트의 제일 앞에 추가해서, 제일 위에 마지막에 입력한 텍스트 필드의 값이 보이게 할 수 있다.
+
+`itemList.appendChild(newItem);` -> `itemList.insertBefore(newItem, itemList.childNodes[0]);`
+
+# 노드 삭제하기
+
+DOM 트리에서 특정 노드를 삭제하기 위해서는, 무조건 부모 노드를 통해서 삭제해야 한다. 따라서, 먼저 부모 노드를 찾기 위한 프로퍼티가 필요하다.
+
+## 부모 노드 찾기 : `자식노드.ParentNode`
+
+해당 프로퍼티는 `parentNode` 프로퍼티이고, 찾고자 하는 노드에 `노드.parentNode`로 찾을 수 있다.
+
+## 노드 삭제하기 : `부모노드.removeChild(자식노드)`
+
+이후, `removeChild()` 메서드를 통해서 접근한 `노드.parentNode`에서 `노드.parent.removeChild(노드)`를 통해 해당 노드를 삭제하면 된다.
+
+예를 들어, `li` 노드를 삭제하기 위해서는 `li.parentNode.removeChild(li)`로 삭제할 수 있다.
+
+# page 638 : 입력한 항목을 클릭할 경우 삭제하기
+
+1. `var li_list = document.querySelectorAll("li");` 를 통해 추가된 새로운 노드를 전부 `li_list`인 노드 리스트에 저장한다.
+
+2. 새로운 노드가 추가될 때 마다 모든 노드에 `addEventListener` 메서드를 통해 `click`시 해당 노드가 삭제되도록 이벤트 처리기를 추가한다.
+	- 앞에서 설명했듯이 익명 함수가 아닌 화살표 함수로 쓰면 `this`가 이벤트가 발생한 요소를 가리키지 못해서 익명 함수로 꼭 써줘야 함
+
+```
+function newRegister() {
+  var newItem = document.createElement("li");  // 요소 노드 추가
+  var subject = document.querySelector("#subject");  // 폼의 텍스트 필드
+  var newText = document.createTextNode(subject.value);  // 텍스트 필드의 값을 텍스트 노드로 만들기
+  newItem.appendChild(newText);  // 텍스트 노드를 요소 노드의 자식 노드로 추가
+
+  var itemList = document.querySelector("#itemList");  // 웹 문서에서 부모 노드 가져오기 
+  itemList.insertBefore(newItem, itemList.childNodes[0]);  // 자식 노드중 첫번째 노드 앞에 추가
+
+  subject.value = "";
+
+  var li_list = document.querySelectorAll("li");
+
+  li_list.forEach(li => {
+  li.addEventListener("click", function () {
+    if (this.parentNode)
+      this.parentNode.removeChild(this);
+  })
+});
+}
+```
