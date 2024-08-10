@@ -65,6 +65,8 @@ y = 30;
 
 # 각 `keyword`의 차이 정리
 
+<img width="752" alt="image" src="https://github.com/user-attachments/assets/657bdb43-b20b-4dbd-b674-6008343b9c95">
+
 1. `var` : `ES6` 이전 버전에서 사용하던 `keyword`로 현재는 `let`으로 대체하여 `var`의 사용을 피하는 것을 권장
   
   - `function scoping` : `if`, `while`, `for` 내부에서 블록 스코핑이 안되는거 유의
