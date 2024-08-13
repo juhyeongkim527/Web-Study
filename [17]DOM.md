@@ -28,7 +28,7 @@ DOM을 구성하는 기본 원칙은 다음과 같다.
 
 4. 주석은 `주석(comment) 노드`이다.
 
-![image](https://github.com/user-attachments/assets/e25eb327-6fc9-4a94-bd2e-14392111427c)
+![image](https://github.com/user-attachments/assets/206bb911-2f3c-47e4-b1b2-e67a6f0139ce)
 
 # DOM 요소에 접근하고 속성 가져오기
 
